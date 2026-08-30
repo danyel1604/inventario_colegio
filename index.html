@@ -28,6 +28,10 @@
 
     <h1>Gestión de Inventario - Colegio</h1>
 
+<!-- Nuevo Buscador EPE 2 -->
+    <div style="text-align: center; margin-bottom: 20px;">
+        <input type="text" id="buscador" onkeyup="filtrarTabla()" placeholder="🔍 Buscar por código o nombre del artículo..." style="width: 50%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-size: 16px;">
+    </div>
     <table id="tabla-articulos">
         <thead>
             <tr>
@@ -145,6 +149,30 @@
         }
 
         cargarInventario();
+// NUEVA FUNCIÓN EPE 2: Buscador en tiempo real
+        function filtrarTabla() {
+            const input = document.getElementById("buscador");
+            const filtro = input.value.toUpperCase();
+            const tabla = document.getElementById("cuerpo-tabla");
+            const filas = tabla.getElementsByTagName("tr");
+
+            for (let i = 0; i < filas.length; i++) {
+                const columnaCodigo = filas[i].getElementsByTagName("td")[0];
+                const columnaNombre = filas[i].getElementsByTagName("td")[1];
+                
+                if (columnaCodigo || columnaNombre) {
+                    const textoCodigo = columnaCodigo.textContent || columnaCodigo.innerText;
+                    const textoNombre = columnaNombre.textContent || columnaNombre.innerText;
+                    
+                    if (textoCodigo.toUpperCase().indexOf(filtro) > -1 || textoNombre.toUpperCase().indexOf(filtro) > -1) {
+                        filas[i].style.display = "";
+                    } else {
+                        filas[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
     </script>
 </body>
 </html>
